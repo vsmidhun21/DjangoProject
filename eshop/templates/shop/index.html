@@ -1,0 +1,425 @@
+{% extends 'shop/Layouts/main.html' %}
+
+{% load static %}
+
+{% block title %}
+MultiZone
+{% endblock title %} 
+
+{% block content %}
+<div class="signup">
+    <p>Sign Up and <b>Get 20% OFF</b> for your first order
+        <i id="closeicon" style="margin-left: 5%;cursor: pointer;" class="fa-solid fa-xmark"></i>
+    </p>
+</div>
+
+<!-- Display Images -->
+
+<div class="image-display">
+    <img id="displayed-image" src="{% static 'Images/slider/slider-one.jpg' %}" alt="Displayed Image">
+    <div class="display__content">
+        <h1>Level up your style with our</h1>
+        <p>Summer Collections</p>
+        <button class="display__btn" onclick="window.location.href = 'collections';">Shop Now</button>
+    </div>
+    <div class="arrow left-arrow">&lt;</div>
+    <div class="arrow right-arrow">&gt;</div>
+</div>
+
+
+<!-- Logos -->
+<div class="logo-container">
+    <h1 style="font-size: 1.5em;">Brands</h1>
+    <di class="logo-container__images">
+        <div class="logo__images">
+            <img src="{% static 'Images/icons/puma.png' %}" alt="">
+            <p>Puma</p>
+        </div>
+        <div class="logo__images">
+            <img src="{% static 'Images/icons/adidas.png' %}" alt="">
+            <p>Adidas</p>
+        </div>
+        <div class="logo__images">
+            <img src="{% static 'Images/icons/nike.png' %}" alt="">
+            <p>Nike</p>
+        </div>
+        <div class="logo__images">
+            <img src="{% static 'Images/icons/simple.png' %}" alt="">
+            <p>Simple</p>
+        </div>
+        <div class="logo__images">
+            <img src="{% static 'Images/icons/leaves.png' %}" alt="">
+            <p>leaves</p>
+        </div>
+        <div class="logo__images">
+            <img src="{% static 'Images/icons/behance.png' %}" alt="">
+            <p>Behance</p>
+        </div>
+        <div class="logo__images">
+            <img src="{% static 'Images/icons/twitch.png' %}" alt="">
+            <p>Twitch</p>
+        </div>
+
+    </di>
+</div>
+
+<!-- Serivce -->
+<div class="service">
+    <div class="servives-container-1">
+        <div>
+            <h2>We Provide Best <br>Customer Experiences</h2>
+        </div>
+        <p>|| We ensure that our customer have the best shopping experience</p>
+    </div>
+
+    <div class="servives-container-2">
+        <div>
+            <i class='bx bx-check'></i>
+            <h4>Original Products</h4>
+            <p>Discover authentic and original products curated for your needs, ensuring quality and reliability.
+            </p>
+        </div>
+
+        <div>
+            <i class='bx bx-smile' ></i>
+            <h4>Satisfaction Guarantee</h4>
+            <p>We stand by our products and your satisfaction is our priority. If you're not happy, we're not happy.
+            </p>
+        </div>
+
+        <div>
+            <i class='bx bx-shopping-bag'></i>
+            <h4>New Arrival Everyday</h4>
+            <p>Stay ahead with our daily updated collection, bringing you the latest trends and innovations.
+            </p>
+        </div>
+
+        <div>
+            <i class='bx bxs-truck'></i>
+            <h4>Fast & Free Shipping</h4>
+            <p>Enjoy hassle-free shopping with our fast and free shipping, delivering your order to your doorstep in no time.
+        </div>
+    </div>
+</div>
+
+<!-- Latest Offer -->
+<div class="container" style="margin-top:70px;" >
+    <div class="row">
+        <div class="col-12">
+            <h4 class="mb-3"> Latest Offfers</h4>
+            <hr style="border-color:#b8bfc2;">
+        </div>
+        {% for item in products %}
+        <div class="col-md-4 col-lg-3">
+            <div class="card my-3">
+                <img src="{{item.product_image.url}}"  class="card-image-top" alt="Categories">
+                <a href="{% url 'product_details' item.category.name item.name %}">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">{{ item.name }}</h5>
+                    <p class="card-text">
+                    <span class="float-start old_price"><s>Rs.{{ item.original_price | stringformat:'d'}}</s></span>
+                    <span class="float-end new_price">Rs.{{ item.selling_price | stringformat:'d' }}</span>
+                    </p>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Limited Offer -->
+<div class="limited-offer">
+    <div class="limited-offer-img">
+        <img src="{% static 'Images/Offer.jpg' %}" alt="">
+    </div>
+    <div class="limited-offer-text">
+        <h2>Limited Offer</h2>
+        <h4>35% OFF on this for the first 30 Customers</h4>
+        <button onclick="window.location.href = 'collections';"> Shop Now <i class="fa-solid fa-arrow-right"></i> </button>
+    </div>
+</div>
+
+<!-- news Letter -->
+<div class="newsletter">
+    <h1>Join our News Letter</h1>
+    <p>Signup for our email newspaper to get exclusive discounts, updates, and more </p>
+    <input style="width: 80%;padding: 10px;" type="text" /><br>
+    <button type="submit">Subscribe <i style="font-size: 2vw;" class="fa-solid fa-arrow-right"></i></button>
+</div>
+
+<script>
+var closeicon = document.getElementById("closeicon")
+var signup = document.querySelector(".signup")
+closeicon.addEventListener('click', () => {
+    signup.style.display = "none"
+})
+
+
+
+const leftArrow = document.querySelector('.left-arrow');
+const rightArrow = document.querySelector('.right-arrow');
+const displayedImage = document.getElementById('displayed-image');
+
+const images = ["{% static 'Images/slider/slider-one.jpg' %}", "{% static 'Images/slider/slider-two.jpg' %}", "{% static 'Images/slider/slider-three.jpg' %}"];
+
+let currentImageIndex = 0;
+
+function updateDisplayedImage() {
+    displayedImage.src = images[currentImageIndex];
+}
+
+leftArrow.addEventListener('click', function () {
+    currentImageIndex--;
+    if (currentImageIndex < 0) {
+        currentImageIndex = images.length - 1;
+    }
+    updateDisplayedImage();
+});
+
+rightArrow.addEventListener('click', function () {
+    currentImageIndex++;
+    if (currentImageIndex >= images.length) {
+        currentImageIndex = 0;
+    }
+    updateDisplayedImage();
+});
+
+function changeImageAutomatically() {
+    currentImageIndex++;
+    if (currentImageIndex >= images.length) {
+        currentImageIndex = 0;
+    }
+    updateDisplayedImage();
+}
+setInterval(changeImageAutomatically, 3000);
+updateDisplayedImage();
+
+</script>
+
+<style>
+*{
+    box-sizing: border-box;
+}
+.signup {
+    text-align: center;
+    font-size: 1.5vw;
+    padding: 5px;
+    background-color: #1D232C;
+    color: white;
+}
+.image-display {
+    position: relative;
+    display: flex;
+    padding: 20px;
+
+}
+
+#displayed-image {
+    width: 100vw;
+    transition: opacity 0.5s ease;
+}
+
+.display__content {
+    color: white;
+    position: absolute;
+    top: 30%;
+    left: 20%;
+    text-align: center;
+}
+
+.display__content h1 {
+    font-size: 4vw;
+}
+
+.display__content p {
+    margin-top: 5px;
+    font-size: 2vw;
+}
+
+.display__btn {
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 8vw;
+    color: white;
+}
+
+.left-arrow {
+    left: 10%;
+}
+
+.right-arrow {
+    right: 10%;
+}
+
+
+/* Logo container */
+
+.logo-container {
+    padding: 20px;
+}
+
+.logo-container__images {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo__images {
+    display: flex;
+    flex-direction: column;
+    font-size: 2vw;
+    align-items: center;
+}
+
+.logo__images img {
+    width: 4vw;
+}
+
+
+/* Service container */
+.service {
+    padding: 20px;
+}
+
+.servives-container-1 {
+    margin-top: 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5vw;
+}
+
+.servives-container-2 {
+    margin-top: 2vw;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-size: 1vw;
+}
+.servives-container-2 i{
+    color: #1D232C;
+    font-size: 3vw;
+    margin-bottom: 10px;
+}
+.servives-container-2 div {
+    border-radius: 5px;
+    color: #fff;
+    background-color: #1D232C;
+    padding: 10px;
+}
+
+.servives-container-2 i{
+    color: #fff;
+}
+
+/* Limited Offer */
+
+.limited-offer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+
+    align-items: center;
+    background-color: #1D232C;
+    color: #E2E1E1;
+    padding: 20px;
+    font-size: 2vw;
+}
+
+.limited-offer img {
+    width: 100%;
+    height: 100%100%;
+}
+
+.limited-offer-text {
+    padding: 5%;
+}
+
+.limited-offer button {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 2.5%;
+    padding-bottom: 2.5%;
+    margin-top: 10px;
+    font-size: 1.2vw;
+    color: #1D232C;
+    border-radius: 10px;
+    border: none;
+}
+
+@media screen and (max-width:900px) {
+    .servives-container-2 {
+        font-size: 1.3vw;
+    }
+
+    .newsletter h1 {
+        font-size: 25px;
+    }
+
+    .newsletter p {
+        font-size: 2vw;
+    }
+
+    .display__btn {
+        font-size: 1.5vb;
+    }
+
+    #displayed-image {
+        width: 90vw;
+    }
+}
+
+@media screen and (max-width: 675px) {
+    .servives-container-2 {
+        display: grid;
+    }
+}
+
+/* newsletter */
+.newsletter {
+    text-align: center;
+    margin-top: 10%;
+}
+
+.newsletter h1 {
+    font-size: 2.5vw;
+}
+
+.newsletter p {
+    font-size: 1.5vw;
+}
+
+.newsletter input {
+    margin-top: 10px;
+    border: none;
+    border: solid 3px #1D232C;
+}
+
+.newsletter button {
+    border: none;
+    background-color: #1D232C;
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 2vw;
+    border-radius: 10px;
+}
+
+.newsletter button:hover {
+    cursor: pointer;
+}
+</style>
+{% endblock content %}
