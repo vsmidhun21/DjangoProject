@@ -40,6 +40,10 @@ Login | MultiZone
 </div>
 
 <style>
+html {
+	position: relative;
+	min-height: 100%;
+}
 .container1{
 	min-height: 331px;
 }
@@ -57,9 +61,17 @@ img{
 	margin-left: 25%;
 	margin-top: -10px;
 }
-@media screen and (max-width:900px) {
-	.frm{
-		min-width: 50%;
+@media screen and (max-width:1200px) {
+	
+    img{
+		opacity: 0;
+		width: 0px;
+		height: 0px;
+	}
+}
+@media screen and (max-width:660px) {
+    .frm{
+		min-width:max-content;
 	}
 }
 </style>
