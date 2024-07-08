@@ -1,6 +1,5 @@
 Django
 django-admin
 pillow
-mysqlclient==2.2.4
 virtualenv
 pipenv
