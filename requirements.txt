@@ -1,6 +1,6 @@
-Django==5.0.13
-django-admin==2.0.2
-pillow==10.3.0
-mysqlclient==2.2.4
-virtualenv==20.26.6
-pipenv==2023.12.1
+Django
+django-admin
+pillow
+mysqlclient
+virtualenv
+pipenv
